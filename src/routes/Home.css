@@ -1,0 +1,79 @@
+main {
+  padding: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.button {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: rgb(121, 186, 242);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: rgb(100, 166, 220);
+}
+
+.analysis {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.analysis h2 {
+  font-size: 27px;
+  margin-bottom: 14px;
+}
+
+.analysis p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.images {
+  margin-left: auto;
+}
+
+.images img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.explore-section {
+  margin-bottom: 40px;
+}
+
+.explore-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  flex: 1;
+  min-width: 200px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.card p {
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .images img {
+      max-width: 100%;
+  }
+}

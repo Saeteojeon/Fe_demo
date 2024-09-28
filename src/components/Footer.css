@@ -1,0 +1,12 @@
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
