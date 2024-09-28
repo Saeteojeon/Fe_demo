@@ -12,7 +12,7 @@ function Header() {
 
   // AI 동네 추천을 클릭했을 때 이동하는 함수
   function goToFacilityDetailPage() {
-    navigate("/FacilityDetailPage"); // 라우트 설정에 따라 해당 경로로 이동
+    navigate("/NeighborhoodRecommendation"); // 라우트 설정에 따라 해당 경로로 이동
   }
 
   // 로고를 클릭했을 때 메인 페이지로 이동하는 함수

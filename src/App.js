@@ -26,6 +26,8 @@ import Completed from "./routes/Completed";
 import NotFound from "./routes/NotFound";
 import FacilityRecommendation from "./routes/FacilityRecommendation";
 import FacilityDetailPage from "./routes/FacilityDetailPage";
+import NeighborhoodRecommendation from "./routes/NeighborhoodRecommendation";
+import NeighborhoodResultPage from "./routes/NeighborhoodResultPage";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
         <Route path="/Completed" element={<Completed />} />
         <Route path="/FacilityRecommendation" element={<FacilityRecommendation />} />
         <Route path="/FacilityDetailPage" element={<FacilityDetailPage />} />
+        <Route path="/NeighborhoodRecommendation" element={<NeighborhoodRecommendation />} />
+        <Route path="/NeighborhoodResultPage" element={<NeighborhoodResultPage />} />
       </Routes>
     </Router>
   );

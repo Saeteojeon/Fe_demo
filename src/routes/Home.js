@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 // 카드에 표시될 데이터들을 배열로 정의
 const cardsData = [
     { emoji: "⭐️", title: "My Page", desc: "View your activities", button: "Edit Profile", path: "FacilityDetailPage" },
-    { emoji: "💡", title: "Neighborhood Recommendations", desc: "Get tailored suggestions", button: "Explore Now", path: "neighborhood-recommendations" },
-    { emoji: "👫", title: "Community", desc: "Connect with neighbors", button: "Create or Join", path: "community" },
+    { emoji: "💡", title: "Neighborhood Recommendations", desc: "Get tailored suggestions", button: "Explore Now", path: "NeighborhoodRecommendation" },
+    { emoji: "👫", title: "Community", desc: "Connect with neighbors", button: "Create or Join", path: "NeighborhoodResultPage" },
     { emoji: "🔍", title: "Neighborhood Tourism Search", desc: "Explore local spots", button: "Search Now", path: "tourism-search" },
     { emoji: "📸", title: "AI Photo Studio", desc: "Discover amazing photos", button: "View Collection", path: "photo-studio" },
 ];

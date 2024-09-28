@@ -1,0 +1,60 @@
+.neighborhood-recommendation-container {
+  padding: 40px; /* 전체 컨테이너의 패딩을 늘려 여유 공간 확보 */
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 40px; /* 동네추천 서비스 텍스트와 검색박스 사이의 간격 조정 */
+}
+
+.input-container {
+  margin: 40px auto; /* 입력 영역과 다른 요소 사이의 여백 증가 */
+  display: flex;
+  gap: 20px; /* 입력 박스 사이의 간격 증가 */
+  justify-content: center;
+}
+
+.search-button {
+  margin-top: 20px; /* 검색 버튼이 더 아래에 위치하도록 조정 */
+  padding: 10px 30px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.map-placeholder {
+  margin-top: 150px; /* 지도 이미지와 위의 입력 영역 사이의 간격 증가 */
+  background-color: #f2f2f2;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.map-image {
+  width: 100%; /* 지도 이미지의 크기를 조절 */
+  height: auto;
+  max-width: 800px; /* 이미지의 최대 크기를 지정 */
+}
+
+input {
+  padding: 12px; /* 입력 박스의 패딩을 늘려 더 크고 여유 있게 */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 300px; /* 입력 박스의 너비를 고정 */
+}
+
+button {
+  padding: 12px 25px; /* 버튼의 크기 증가 */
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+p {
+  margin-top: 20px; /* 설명 텍스트의 간격을 더 넓게 */
+  font-size: 14px;
+  color: #666;
+}
