@@ -18,18 +18,18 @@ function NeighborhoodRecommendation() {
     }
 
     const combinedInput = `${location} ${keyword}`;
-    const token = localStorage.getItem("token"); // 로컬 스토리지에서 토큰 가져오기
+    //const token = localStorage.getItem("token"); // 로컬 스토리지에서 토큰 가져오기
 
     try {
       const response = await axios.post(
-        "/find/town",
+        "http://3.37.102.94//find/town",
         {
           keywordList: [combinedInput],
         },
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Authorization 헤더에 Bearer 토큰 추가
+            //'Authorization': `Bearer ${token}`, // Authorization 헤더에 Bearer 토큰 추가
           },
         }
       );

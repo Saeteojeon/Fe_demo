@@ -24,13 +24,16 @@ function FacilityRecommendation() {
       radius: parseInt(radius, 10)
     };
 
+       // 요청 데이터 확인을 위한 디버깅
+       console.log("Sending Request Data:", requestData);
+
     // 로컬 스토리지에서 토큰 가져오기
-    const token = localStorage.getItem('accessToken'); 
+    //const token = localStorage.getItem('accessToken'); 
 
     // Axios를 사용해 API 요청 보내기
-    axios.post('/find/keyword', requestData, {
+    axios.post('http://3.37.102.94/find/keyword/', requestData, {
       headers: {
-        Authorization: `Bearer ${token}` // Authorization 헤더에 토큰 추가
+        //Authorization: `Bearer ${token}` // Authorization 헤더에 토큰 추가
       }
     })
       .then(response => {

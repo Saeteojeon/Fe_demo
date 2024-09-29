@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: "http://3.37.102.94", // baseURL을 변경
+  //baseURL: "http://3.37.102.94", // baseURL을 변경
   headers: { 'Content-Type': 'application/json' }
 });
 
@@ -30,3 +30,4 @@ instance.interceptors.response.use(
 );
 
 export default instance;
+
