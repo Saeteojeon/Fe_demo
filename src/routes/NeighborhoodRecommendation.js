@@ -22,7 +22,7 @@ function NeighborhoodRecommendation() {
 
     try {
       const response = await axios.post(
-        "http://3.37.102.94//find/town",
+        "http://3.37.102.94/find/town",
         {
           keywordList: [combinedInput],
         },

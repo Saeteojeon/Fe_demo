@@ -40,7 +40,7 @@ function Header() {
         <input type="text" placeholder="검색어를 입력하세요...." />
         <span role="img" aria-label="search" className="search-icon">🔍</span>
         <button className="LoginBtn" onClick={ToLogin}>
-            로그인
+            로그아웃
           </button>
       </div>
     </header>

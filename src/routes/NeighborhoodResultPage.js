@@ -12,9 +12,10 @@ function NeighborhoodResultPage() {
     const fetchNeighborhoodData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("/find/town", {
+        const response = await axios.get("http://3.37.102.94/find/town", {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            //'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
           }
         });
 

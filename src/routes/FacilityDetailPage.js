@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios'; // axios 가져오기
-import "./FacilityDetailPage.css"; // 스타일시트 가져오기
+import "./FacilityDetailPage.css";
+import { useLocation } from 'react-router-dom';
+import Header from "../components/Header"; 
 
 function FacilityDetailPage() {
-  const [facilityDetailList, setFacilityDetailList] = useState([]);
   const [facilityDetailMap, setFacilityDetailMap] = useState(null);
   const [facilityDetailMapMarkers, setFacilityDetailMapMarkers] = useState([]);
+  const { state } = useLocation(); // 이전 페이지에서 전달된 데이터 접근
+  const facilityDetailList = state?.facilityData || []; // 전달된 데이터에서 facilityData 가져오기
 
   // 카카오맵 API 스크립트 로드
   const loadKakaoMapScript = () => {
@@ -14,7 +16,7 @@ function FacilityDetailPage() {
         resolve(window.kakao);
       } else {
         const script = document.createElement('script');
-        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=2aae91b28b781cb3b44e0df398b6ff00&autoload=false&libraries=services,clusterer,drawing`; 
+        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=2aae91b28b781cb3b44e0df398b6ff00&autoload=false&libraries=services,clusterer,drawing`;
         script.onload = () => {
           window.kakao.maps.load(() => {
             console.log("카카오 맵 스크립트가 성공적으로 로드되었습니다.");
@@ -28,63 +30,6 @@ function FacilityDetailPage() {
         document.head.appendChild(script);
       }
     });
-  };
-
-  // 더미 데이터 사용
-  const loadMockData = () => {
-    const mockData = [
-      {
-        id: 1,
-        place_name: "이마트24 R홍대기숙사점",
-        address_name: "서울 마포구 양화로 45",
-        road_address_name: "서울 마포구 양화로 45",
-        place_url: "http://place.map.kakao.com/123456",
-        x: "126.923541",
-        y: "37.550937"
-      },
-      {
-        id: 2,
-        place_name: "CU 홍대입구역점",
-        address_name: "서울 마포구 어울마당로 7",
-        road_address_name: "서울 마포구 어울마당로 7",
-        place_url: "http://place.map.kakao.com/654321",
-        x: "126.923291",
-        y: "37.551837"
-      },
-      {
-        id: 3,
-        place_name: "GS25 홍대모스점",
-        address_name: "서울 마포구 와우산로21길 17",
-        road_address_name: "서울 마포구 와우산로21길 17",
-        place_url: "http://place.map.kakao.com/789101",
-        x: "126.922341",
-        y: "37.552337"
-      },
-      {
-        id: 4,
-        place_name: "프랜차이즈 커피샵 존재",
-        address_name: "서울 마포구 와우산로29길 18",
-        road_address_name: "서울 마포구 와우산로29길 18",
-        place_url: "http://place.map.kakao.com/111213",
-        x: "126.921341",
-        y: "37.553137"
-      }
-    ];
-
-    setFacilityDetailList(mockData);
-
-    if (mockData.length > 0) {
-      const positions = mockData.map((facility) => ({
-        id: facility.id,
-        title: facility.place_name,
-        latlng: new window.kakao.maps.LatLng(facility.y, facility.x),
-        address: facility.address_name,
-        roadAddress: facility.road_address_name,
-        url: facility.place_url
-      }));
-
-      displayFacilityDetailMarkers(positions);
-    }
   };
 
   // 카카오 맵 초기화 및 마커 표시
@@ -113,6 +58,7 @@ function FacilityDetailPage() {
     }
   };
 
+  // 컴포넌트 마운트 시 카카오 맵 초기화
   useEffect(() => {
     const initializeMap = async () => {
       const kakao = await loadKakaoMapScript();
@@ -129,15 +75,26 @@ function FacilityDetailPage() {
     initializeMap(); // 카카오 맵 초기화
   }, []);
 
+  // facilityDetailList가 업데이트되었을 때 마커 표시
   useEffect(() => {
-    if (facilityDetailMap) {
-      loadMockData();
+    if (facilityDetailMap && facilityDetailList.length > 0) {
+      const positions = facilityDetailList.map((facility) => ({
+        id: facility.id,
+        title: facility.place_name,
+        latlng: new window.kakao.maps.LatLng(facility.y, facility.x),
+        address: facility.address_name,
+        roadAddress: facility.road_address_name,
+        url: facility.place_url
+      }));
+      displayFacilityDetailMarkers(positions);
     }
-  }, [facilityDetailMap]);
+  }, [facilityDetailMap, facilityDetailList]);
 
   return (
+    <div className="facility-recommendation-wrapper">
+      <Header />
     <div className="facility-detail-page-container">
-      <h2>편의시설 추천</h2>
+      <h2>편의시설 추천 결과</h2>
       <div className="facility-detail-page-wrapper">
         <div id="facilityDetailMap" className="facility-detail-map"></div>
         <div className="facility-detail-list">
@@ -157,6 +114,8 @@ function FacilityDetailPage() {
         </div>
       </div>
     </div>
+    </div>
+
   );
 }
 
