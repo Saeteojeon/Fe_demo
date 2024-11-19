@@ -1,0 +1,131 @@
+/* MyPickPage.css */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.mypick-background {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.facility-background-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지를 화면에 맞게 조정 */
+  z-index: -1; /* 배경으로 보이게 설정 */
+  filter: none; /* 흐림 효과 제거 */
+  opacity: 1; /* 투명도 제거 */
+}
+
+
+
+.mypick-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  z-index: 1;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: #212529;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.page-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 48px;
+}
+
+.pick-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.pick-item {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  backdrop-filter: none;
+}
+
+.pick-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pick-content {
+  display: flex;
+  align-items: center;
+  padding: 24px;
+  gap: 24px;
+}
+
+.image-placeholder {
+  width: 200px;
+  height: 150px;
+  background: rgba(248, 249, 250, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.image-icon {
+  font-size: 32px;
+  color: #adb5bd;
+}
+
+.pick-text {
+  flex: 1;
+}
+
+.pick-text h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.pick-text p {
+  color: #666;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .pick-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .image-placeholder {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+}

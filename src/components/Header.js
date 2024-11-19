@@ -20,6 +20,28 @@ function Header() {
     navigate("/"); // 메인 페이지 경로로 이동
   }
 
+   
+   function goToComunityPage() {
+    navigate("/Community"); //  페이지 경로로 이동
+  }
+
+  function goToMypagePage() {
+    navigate("/Mypage"); //  페이지 경로로 이동
+  }
+
+  function goToTourInfoPage() {
+    navigate("/TourInfo"); //  페이지 경로로 이동
+  }
+
+  function goToMypickPage() {
+    navigate("/Mypick"); //  페이지 경로로 이동
+  }
+
+  function goToAIpotoPage() {
+    navigate("/AIphoto"); //  페이지 경로로 이동
+  }
+
+
   return (
     <header>
       <div className="logo" onClick={goToMainPage} style={{ cursor: "pointer" }}>
@@ -28,12 +50,11 @@ function Header() {
       <nav>
         <ul>
           <li><a href="#ai-recommendations" onClick={goToFacilityDetailPage}>AI 동네 추천</a></li>
-          <li><a href="#community">커뮤니티</a></li>
-          <li><a href="#my-picks">My Picks</a></li>
-          <li><a href="#tourism-info">동네 관광정보</a></li>
-          <li><a href="#photo-studio">AI Photo Studio</a></li>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#my-page">My Page</a></li>
+          <li><a href="#community"onClick={goToComunityPage}>커뮤니티</a></li>
+          <li><a href="#my-picks" onClick={goToMypickPage}>My Picks</a></li>
+          <li><a href="#tourism-info" onClick={goToTourInfoPage}>동네 관광정보</a></li>
+          <li><a href="#photo-studio" onClick={goToAIpotoPage}>AI Photo Studio</a></li>
+          <li><a href="#my-page" onClick={goToMypagePage}>My Page</a></li>
         </ul>
       </nav>
       <div className="search-bar">

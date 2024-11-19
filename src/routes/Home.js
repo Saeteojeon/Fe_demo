@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 // 카드에 표시될 데이터들을 배열로 정의
 const cardsData = [
-    { emoji: "⭐️", title: "My Page", desc: "View your activities", button: "Edit Profile", path: "FacilityDetailPage" },
-    { emoji: "💡", title: "Neighborhood Recommendations", desc: "Get tailored suggestions", button: "Explore Now", path: "NeighborhoodRecommendation" },
-    { emoji: "👫", title: "Community", desc: "Connect with neighbors", button: "Create or Join", path: "NeighborhoodResultPage" },
-    { emoji: "🔍", title: "Neighborhood Tourism Search", desc: "Explore local spots", button: "Search Now", path: "tourism-search" },
-    { emoji: "📸", title: "AI Photo Studio", desc: "Discover amazing photos", button: "View Collection", path: "photo-studio" },
+    { emoji: "⭐️", title: "마이 페이지", desc: "내 활동 보기", button: "프로필 수정", path: "Mypage" },
+    { emoji: "💡", title: "동네 추천", desc: "맞춤 동네를 추천해드려요!", button: "지금 탐색", path: "NeighborhoodRecommendation" },
+    { emoji: "👫", title: "커뮤니티", desc: "동네 주민 환영해요!", button: "참여하기", path: "Community" },
+    { emoji: "🔍", title: "동네 관광지 검색", desc: "지역 명소를 알려드려요!", button: "지금 검색", path: "TourInfo" },
+    { emoji: "📸", title: "AI 사진 스튜디오", desc: "이미지를 추천해드려요!", button: "컬렉션 보기", path: "AIphoto" },
 ];
+
+
 
 function Home() {
     const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅 사용

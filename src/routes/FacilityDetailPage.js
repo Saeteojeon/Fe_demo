@@ -112,7 +112,7 @@ function FacilityDetailPage() {
             ))}
           </ul>
         </div>
-      </div>
+      </div>z
     </div>
     </div>
 

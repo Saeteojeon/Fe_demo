@@ -1,94 +1,195 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Header from "../components/Header"; // 이미 구현된 Header 컴포넌트 임포트
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Header from "../components/Header";
 import "./NeighborhoodResultPage.css";
 
 function NeighborhoodResultPage() {
-  const [keywordList, setKeywordList] = useState([]);
-  const [locationData, setLocationData] = useState([]);
+  const { state } = useLocation();
+  const [map, setMap] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedKeyword, setSelectedKeyword] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const [infowindows, setInfowindows] = useState([]);
 
-  // 페이지 로드 시 API에서 데이터 가져오기
-  useEffect(() => {
-    const fetchNeighborhoodData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get("http://3.37.102.94/find/town", {
-          headers: {
-            //'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
-        });
+  const data = state || { answer: [], keywordList: [] };
+  
+  const keywords = [...new Set(
+    data.keywordList
+      .filter(keyword => keyword && typeof keyword === 'string')
+      .map(keyword => keyword.replace(/[\[\]]/g, '').trim())
+      .filter(keyword => keyword.length > 0)
+  )];
 
-        const { keywordList, locations } = response.data; // keywordList와 위치 데이터를 API 응답에서 직접 가져옵니다.
-        setKeywordList(keywordList);
-        setLocationData(locations); // 이때 locations에는 location, description, lat, lng 정보가 포함되어야 합니다.
-
-        // 카카오맵 스크립트 로드
-        const script = document.createElement('script');
-        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=2aae91b28b781cb3b44e0df398b6ff00&autoload=false`;
-        script.onload = () => {
-          window.kakao.maps.load(() => {
-            initializeMap(locations);
-          });
-        };
-        document.head.appendChild(script);
-
-      } catch (error) {
-        console.error("Error fetching neighborhood data:", error);
+  const loadKakaoMapScript = () => {
+    return new Promise((resolve, reject) => {
+      if (window.kakao && window.kakao.maps) {
+        resolve(window.kakao);
+        return;
       }
-    };
-
-    fetchNeighborhoodData();
-  }, []);
-
-  // 카카오 맵 초기화 함수
-  const initializeMap = (locations) => {
-    const mapContainer = document.getElementById("resultMap");
-    const mapOption = {
-      center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
-      level: 5, // 맵 레벨
-    };
-
-    const map = new window.kakao.maps.Map(mapContainer, mapOption);
-
-    // 서버에서 받아온 위치 데이터로 마커 생성
-    locations.forEach((place) => {
-      const markerPosition = new window.kakao.maps.LatLng(place.lat, place.lng);
-
-      const marker = new window.kakao.maps.Marker({
-        position: markerPosition,
-      });
-
-      marker.setMap(map);
+      const script = document.createElement('script');
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_API_KEY&autoload=false&libraries=services`;
+      script.onload = () => window.kakao.maps.load(() => resolve(window.kakao));
+      script.onerror = () => reject(new Error('카카오맵 스크립트 로드 실패'));
+      document.head.appendChild(script);
     });
   };
 
-  return (
-    <div className="neighborhood-result-container">
-      <Header /> {/* 기존에 구현된 Header 컴포넌트 사용 */}
-      <h2>동네 추천 결과</h2>
-      
-      <div className="keyword-list">
-        {keywordList.map((keyword, index) => (
-          <span key={index} className="keyword-bubble">
-            {keyword}
-          </span>
-        ))}
-      </div>
+  const initializeMap = async () => {
+    try {
+      if (!data.answer || data.answer.length === 0) return;
 
-      <div className="result-wrapper">
-        <div id="resultMap" className="map-container"></div>
-        <div className="description-list">
-          {locationData.map((location, index) => (
-            <div key={index} className="description-item">
-              <h3>{location.location}</h3>
-              <p>{location.description}</p>
+      const kakao = await loadKakaoMapScript();
+      const container = document.getElementById("map");
+      const options = {
+        center: new kakao.maps.LatLng(37.5665, 126.978),
+        level: 3
+      };
+      
+      const newMap = new kakao.maps.Map(container, options);
+      setMap(newMap);
+
+      const geocoder = new kakao.maps.services.Geocoder();
+      const bounds = new kakao.maps.LatLngBounds();
+      const newMarkers = [];
+      const newInfowindows = [];
+
+      const geocodePromises = data.answer.map((item, index) => {
+        return new Promise((resolve) => {
+          const locationName = item.location.split('.')[1]?.trim() || item.location;
+          
+          geocoder.addressSearch(locationName, (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+              
+              const markerImage = new kakao.maps.MarkerImage(
+                'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png',
+                new kakao.maps.Size(36, 37),
+                {
+                  spriteSize: new kakao.maps.Size(36, 691),
+                  spriteOrigin: new kakao.maps.Point(0, (index * 46) + 10),
+                  offset: new kakao.maps.Point(13, 37)
+                }
+              );
+
+              const marker = new kakao.maps.Marker({
+                map: newMap,
+                position: coords,
+                image: markerImage
+              });
+
+              const infowindow = new kakao.maps.InfoWindow({
+                content: `<div style="padding:5px;width:150px;text-align:center;">
+                  <strong>${index + 1}. ${locationName}</strong>
+                </div>`
+              });
+
+              kakao.maps.event.addListener(marker, 'mouseover', () => {
+                infowindow.open(newMap, marker);
+              });
+
+              kakao.maps.event.addListener(marker, 'mouseout', () => {
+                infowindow.close();
+              });
+
+              bounds.extend(coords);
+              newMarkers.push(marker);
+              newInfowindows.push(infowindow);
+            }
+            resolve();
+          });
+        });
+      });
+
+      await Promise.all(geocodePromises);
+      
+      if (newMarkers.length > 0) {
+        newMap.setBounds(bounds);
+        
+        const currentLevel = newMap.getLevel();
+        if (currentLevel < 3) {
+          newMap.setLevel(3);
+        } else if (currentLevel > 7) {
+          newMap.setLevel(7);
+        }
+      }
+
+      setMarkers(newMarkers);
+      setInfowindows(newInfowindows);
+    } catch (error) {
+      console.error("지도 초기화 오류:", error);
+    }
+  };
+
+  const handleKeywordClick = (keyword) => {
+    setSelectedKeyword(keyword);
+    const filtered = data.answer.filter(item => 
+      item.location.toLowerCase().includes(keyword.toLowerCase()) ||
+      item.description.toLowerCase().includes(keyword.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
+  useEffect(() => {
+    initializeMap();
+    setFilteredData(data.answer);
+  }, [data]);
+
+  return (
+    <>
+      {/* Header를 최상단에 위치 */}
+      <Header />
+  
+      {/* ResultPage 구조 */}
+      <div className="neighborhood-result-page">
+        <div className="content-wrapper">
+          {/* 키워드 버튼 */}
+          <div className="keyword-container">
+            {keywords.map((keyword, index) => (
+              <button
+                key={index}
+                className={`keyword-button ${
+                  selectedKeyword === keyword ? "active" : ""
+                }`}
+                onClick={() => handleKeywordClick(keyword)}
+              >
+                {keyword}
+              </button>
+            ))}
+          </div>
+  
+          {/* 지도와 추천 리스트 */}
+          <div className="content-container">
+            <div id="map" className="map-container" />
+            <div className="result-list">
+              {filteredData.map((item, index) => (
+                <div
+                  key={index}
+                  className={`result-item ${
+                    selectedKeyword &&
+                    (item.location
+                      .toLowerCase()
+                      .includes(selectedKeyword.toLowerCase()) ||
+                      item.description
+                        .toLowerCase()
+                        .includes(selectedKeyword.toLowerCase()))
+                      ? "active"
+                      : ""
+                  }`}
+                >
+                  <h3 className="result-location">
+                    <span className="location-number">{index + 1}</span>
+                    {item.location}
+                  </h3>
+                  <p className="result-description">{item.description}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
-}
-
-export default NeighborhoodResultPage;
+  }
+  
+  export default NeighborhoodResultPage;
+  

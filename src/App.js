@@ -28,6 +28,16 @@ import FacilityRecommendation from "./routes/FacilityRecommendation";
 import FacilityDetailPage from "./routes/FacilityDetailPage";
 import NeighborhoodRecommendation from "./routes/NeighborhoodRecommendation";
 import NeighborhoodResultPage from "./routes/NeighborhoodResultPage";
+import Community from "./routes/Community";
+import Mypage from "./routes/Mypage";
+import TourInfo from "./routes/TourInfo";
+import Mypick from "./routes/Mypick";
+import FavoritePick from "./routes/FavoritePick";
+import KeywordPick from "./routes/KeywordPick";
+import FacilityPick from "./routes/FacilityPick";
+import AIphoto from "./routes/AIphoto";
+import Result from "./routes/Result";
+
 
 function App() {
   return (
@@ -42,6 +52,16 @@ function App() {
         <Route path="/FacilityDetailPage" element={<FacilityDetailPage />} />
         <Route path="/NeighborhoodRecommendation" element={<NeighborhoodRecommendation />} />
         <Route path="/NeighborhoodResultPage" element={<NeighborhoodResultPage />} />
+        <Route path="/Community" element={<Community />} />
+        <Route path="/Mypage" element={<Mypage />} />
+        <Route path="/TourInfo" element={<TourInfo />} />
+        <Route path="Mypick" element={<Mypick />} />
+        <Route path="FavoritePick" element={<FavoritePick />} />
+        <Route path="KeywordPick" element={<KeywordPick />} />
+        <Route path="FacilityPick" element={<FacilityPick />} />
+        <Route path="AIphoto" element={<AIphoto />} />
+        <Route path="Result" element={<Result />} />
+        
       </Routes>
     </Router>
   );
