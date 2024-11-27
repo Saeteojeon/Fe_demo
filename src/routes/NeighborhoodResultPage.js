@@ -27,7 +27,7 @@ function NeighborhoodResultPage() {
         return;
       }
       const script = document.createElement('script');
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_API_KEY&autoload=false&libraries=services`;
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=2aae91b28b781cb3b44e0df398b6ff00&autoload=false&libraries=services`;
       script.onload = () => window.kakao.maps.load(() => resolve(window.kakao));
       script.onerror = () => reject(new Error('카카오맵 스크립트 로드 실패'));
       document.head.appendChild(script);
